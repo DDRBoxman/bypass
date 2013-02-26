@@ -129,11 +129,13 @@ namespace Bypass {
 		}
 	}
 
-	void Parser::stackTempElement(BlockElement* blockElement) {
+	void Parser::stackTempElement(BlockElement blockElement) {
+		BlockElement* element = new BlockElement(blockElement);
 		if (tempBlockElement != NULL) {
-			blockElement->append(tempBlockElement);
+			element->append(*tempBlockElement);
+			delete tempBlockElement;
 		}
-		this->tempBlockElement = blockElement;
+		this->tempBlockElement = element;
 	}
 
 	void Parser::clearSpanElements() {
@@ -159,8 +161,8 @@ namespace Bypass {
 			moveTempToDocument();
 		}
 
-		Bypass::BlockElement* element = new BlockElement();
-		element->setText(text->data);
+		Bypass::BlockElement element;
+		element.setText(text->data);
 		stackTempElement(element);
 	}
 
@@ -181,11 +183,11 @@ namespace Bypass {
 			moveTempToDocument();
 		}
 
-		Bypass::BlockElement* element = new BlockElement();
+		Bypass::BlockElement element;
 		if (text->size) {
-			element->setText(text->data);
+			element.setText(text->data);
 		}
-		element->setSpanElements(tempSpanElements);
+		element.setSpanElements(tempSpanElements);
 		clearSpanElements();
 		stackTempElement(element);
 	}

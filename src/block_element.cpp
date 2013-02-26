@@ -38,18 +38,26 @@ namespace Bypass {
 		return this->text;
 	}
 
-	void  BlockElement::append(BlockElement* blockElement) {
-		this->blockElements.push_back(blockElement);
+	void  BlockElement::append(BlockElement& blockElement) {
+		this->blockElements.push_back(new BlockElement(blockElement));
 	}
 
-	void BlockElement::append(SpanElement* spanElement) {
-		this->spanElements.push_back(spanElement);
+	void BlockElement::append(SpanElement& spanElement) {
+		this->spanElements.push_back(new SpanElement(spanElement));
 	}
 
 	void
 	BlockElement::setSpanElements(std::vector<SpanElement*> elements) {
 		for (std::vector<SpanElement*>::iterator it = elements.begin(); it!=elements.end(); ++it) {
-			spanElements.push_back(*it);
+			spanElements.push_back(new SpanElement(**it));
 		}
+	}
+
+	size_t BlockElement::getNumberOfSpanElements() {
+		return spanElements.size();
+	}
+
+	SpanElement* BlockElement::getSpanElement(size_t i) {
+		return spanElements.at(i);
 	}
 }

@@ -79,3 +79,39 @@ BOOST_FIXTURE_TEST_CASE(document_access_with_multiple_members, F) {
 	BOOST_REQUIRE(document[2]->getText().length() == 1);
 	BOOST_REQUIRE(document[2]->getText() == "2");
 }
+
+BOOST_FIXTURE_TEST_CASE(document_access_with_multiple_members_with_children, F) {
+	int i, count = 3;
+
+	for (i = 0; i < count; i++) {
+		BlockElement blockElement;
+
+		char str[10];
+		sprintf(str, "%d", i);
+
+		const std::string value = std::string(str);
+
+		blockElement.setText(value);
+
+		SpanElement element;
+		element.setText("test");
+		blockElement.append(element);
+
+		document.append(blockElement);
+	}
+
+	BOOST_REQUIRE(document[0]->getText().length() == 1);
+	BOOST_REQUIRE(document[0]->getText() == "0");
+	BOOST_REQUIRE(document[0]->getNumberOfSpanElements() == 1);
+	BOOST_REQUIRE(document[0]->getSpanElement(0)->getText() == "test");
+
+	BOOST_REQUIRE(document[1]->getText().length() == 1);
+	BOOST_REQUIRE(document[1]->getText() == "1");
+	BOOST_REQUIRE(document[1]->getNumberOfSpanElements() == 1);
+	BOOST_REQUIRE(document[1]->getSpanElement(0)->getText() == "test");
+
+	BOOST_REQUIRE(document[2]->getText().length() == 1);
+	BOOST_REQUIRE(document[2]->getText() == "2");
+	BOOST_REQUIRE(document[2]->getNumberOfSpanElements() == 1);
+	BOOST_REQUIRE(document[2]->getSpanElement(0)->getText() == "test");
+}

@@ -24,4 +24,9 @@ namespace Bypass {
 	SpanElement::setType(std::string type) {
 		this->type = type;
 	}
+
+	std::string
+	SpanElement::getText() {
+		return text;
+	}
 }

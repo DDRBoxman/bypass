@@ -16,6 +16,7 @@ namespace Bypass {
 		void setText(std::string text);
 		void setExtra(std::string extra);
 		void setType(std::string type);
+		std::string getText();
 	};
 
 }
